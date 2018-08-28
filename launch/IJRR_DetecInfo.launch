@@ -1,0 +1,49 @@
+<launch>
+    <arg name = "husky1_rgb" default = "true"/>
+    <arg name = "husky2_rgb" default = "true"/>
+    <arg name = "husky1_thermal" default = "false"/>
+
+    <!--The code running for the color camera in husky1-->
+    <group if="$(arg husky1_rgb)" ns = "husky1/rgb">
+        <!--For the transferring from pointcloud2 to pointcloud-->
+        <node pkg="point_cloud_converter" type="point_cloud_converter_node" name="PC_converter">
+		    <remap from="/points2_in" to="/rgbdt_fusion/human_center_cloud2"/>
+		    <remap from="/points_out" to="/output_cloud"/>
+	    </node>
+        <!--Showing the point in the octomap-->
+	    <node pkg="trajectory_generator" type="PointCloud_reproject_husky1_rgb.py" name="PC_projection" output="screen"/>
+        <!--Showing the trajectories in the octomap-->
+	    <node pkg="trajectory_generator" type="Trajectory_generation_husky1_rgb.py" name="Trajetories" output="screen"/>
+
+    </group>
+
+
+    <!-- The nodes running for the thermal camera in husky1 -->
+    <group if="$(arg husky1_thermal)" ns = "husky1/thermal">
+        <!--For the transformation from pointcloud2 to pointcloud-->
+        <node pkg="point_cloud_converter" type="point_cloud_converter_node" name="PC_converter">
+		    <remap from="/points2_in" to="/rgbdt_fusion/human_center_cloud2"/>
+		    <remap from="/points_out" to="/output_cloud_husky1_thermal"/>
+	    </node>
+        <!--Showing the point in the octomap-->
+	    <node pkg="trajectory_generator" type="PointCloud_reproject_husky1_thermal.py" name="PC_projection" output="screen"/>
+        <!--Showing ing the trajectories in the octomap-->
+	    <node pkg="trajectory_generator" type="Trajectory_generation_husky1_thermal.py" name="Trajetories" output="screen"/>
+
+    </group>
+
+    <!--The nodes running for the color camera in husky2-->
+    <group if="$(arg husky2_rgb)" ns = "husky2/rgb">
+        <!-- For the transformation from pointcloud2 to pointcloud -->
+        <node pkg="point_cloud_converter" type="point_cloud_converter_node" name="PC_converter">
+		    <remap from="/points2_in" to="/rgbdt_fusion/human_center_cloud2_husky2"/>
+		    <remap from="/points_out" to="/output_cloud_husky2"/>
+	    </node>
+        <!--Showing the point in the octomap-->
+	    <node pkg="trajectory_generator" type="PointCloud_reproject_husky2.py" name="PC_projection" output="screen"/>
+        <!-- <Showing the trajectories in the octomap,projecting the trajectory to the global map through tf transformation> -->
+	    <node pkg="trajectory_generator" type="Trajectory_generation_husky2.py" name="Trajetories" output="screen"/>
+
+    </group>
+
+</launch>

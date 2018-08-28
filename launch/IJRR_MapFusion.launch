@@ -1,0 +1,20 @@
+<launch>
+	<!--include file = "$(find multimaster_setup)/launch/husky1_state_publisher.launch"/-->
+	<!--include file = "$(find multimaster_setup)/launch/husky2_state_publisher.launch"/-->
+    
+	<!--  The following files are aiming to generate the tf transform form husky*/map to husky*/base_link-->
+	<include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/> 
+	<include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/>
+
+	<!--The following files are generating the paths for each robot with respect to the map frames-->
+	<include file = "$(find draw_path)/launch/husky1_draw_path.launch"/>
+	<include file = "$(find draw_path)/launch/husky2_draw_path.launch"/>
+	
+	<!--To generate the global fused map-->
+	<include file = "$(find map_fusion)/launch/octomap_mapping_twonode.launch"/>
+	<include file = "$(find map_fusion)/launch/oicp_ros_octo.launch"/>
+
+	<!--Static transformation for the husky2 robot and husky1/map to /map-->
+	<include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/>
+	<!--include file = "$(find collab_husky_demo)/launch/visualize.launch"/-->
+</launch>
