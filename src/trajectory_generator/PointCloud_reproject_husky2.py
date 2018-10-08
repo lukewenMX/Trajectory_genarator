@@ -38,14 +38,17 @@ class Trajectory_generator(object):
         #time = rospy.Time.now()
         #rospy.logerr(time)
 		#self.tf.waitForTransform("map","thermal_camera",rospy.Time.now(),rospy.Duration(2.0))
-        pointcloud = human_centers
-        pointcloud.header.frame_id = "husky2/left_camera"
-        #rospy.loginfo(pointcloud.header)
+        
+        #self.tf.waitForTransform("map","husky2/left_camera",rospy.Time.now(),rospy.Duration(4))
         try:
             #rospy.loginfo("Here!")
-            self.tf.waitForTransform("map","husky2/left_camera",rospy.Time(0),rospy.Duration(0.1))
-            self.pointcloud = self.tf.transformPointCloud("map",pointcloud)
+            header = human_centers.header
+            human_centers.header.frame_id = "husky2/left_camera"
+            human_centers.header.stamp = rospy.Time.now()
+            self.tf.waitForTransform("map","husky2/left_camera",rospy.Time.now(),rospy.Duration(5))
+            self.pointcloud = self.tf.transformPointCloud("map",human_centers)
             #rospy.loginfo(self.pointcloud.header)
+            self.pointcloud.header = header
             self.pointcloud_pub.publish(self.pointcloud)
         except(tf.LookupException,tf.ConnectivityException):
             rospy.loginfo("There are any exception happened!")#,tf.ExtrapolationException,rospy.ROSTimeMovedBackwardsException):

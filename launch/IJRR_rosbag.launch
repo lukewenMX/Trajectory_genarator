@@ -1,16 +1,16 @@
 <launch>
 	<!--rosbag replay for the two robots-->
-	<param name="use_sim_time" value="false"/>
+	<param name="use_sim_time" value="true"/>
 
     <!--When using the use_sim_time = true, the map_fusion node does not work properly-->
-	<arg name = "file1" value="/home/lukewen/Desktop/dataset/husky1-detection.bag"/>
-	<arg name = "file2" value="/home/lukewen/Desktop/dataset/husky2-detection.bag"/>
+	<arg name = "file1" value="/home/lukewen/Desktop/dataset/UAV_UGV/husky1-02.bag"/>
+	<arg name = "file2" value="/home/lukewen/Desktop/dataset/UAV_UGV/uav2.bag"/>
 	<node pkg="rosbag" type="play" name="playback1" args="--clock -l $(arg file1)">
 		<remap from="/camera/left/camera_info" to="/camera/left/camera_info1"/>
-		<remap from="/camera/left/image_raw" to="/camera/left/image_raw1"/>
+		<remap from="/camera/left/image_raw/compressed" to="/camera/left/image_raw1"/>
 		<remap from="/camera/right/camera_info" to="/camera/right/camera_info1"/>
-		<remap from="/camera/right/image_raw" to="/camera/right/image_raw1"/>
-		<remap from="/clock" to="/clock1"/>
+		<remap from="/camera/right/image_raw/compressed" to="/camera/right/image_raw1"/>
+		<remap from="/clock" to="/clock"/>
 		<remap from="/rosout" to="/rosout1"/>
 		<remap from="/tf" to="/tf"/>
 		<remap from="/velodyne_cloud_registered" to="/velodyne_cloud_registered1"/>
@@ -23,9 +23,9 @@
 
 	<node pkg="rosbag" type="play" name="playback2" args="--clock -l $(arg file2)" >
 		<remap from="/camera/left/camera_info" to="/camera/left/camera_info2"/>
-		<remap from="/camera/left/image_raw" to="/camera/left/image_raw2"/>
+		<remap from="/camera/left/image_raw/compressed" to="/camera/left/image_raw2"/>
 		<remap from="/camera/right/camera_info" to="/camera/right/camera_info2"/>
-		<remap from="/camera/right/image_raw" to="/camera/right/image_raw2"/>
+		<remap from="/camera/right/image_raw/compressed" to="/camera/right/image_raw2"/>
 		<remap from="/clock" to="/clock2"/>
 		<remap from="/rosout" to="/rosout2"/>
 		<remap from="/tf" to="/tf2"/>
@@ -34,7 +34,12 @@
 		<remap from="/velodyne_points" to="/velodyne_points2"/>
 		<remap from="/rgbdt_fusion/human_center_cloud2" to="/rgbdt_fusion/human_center_cloud2_husky2"/>
 		<remap from="/rgbdt_fusion/resColor/full" to="/rgbdt_fusion/resColor/full2"/>
-		<remap from="/vision_tracking/rgb_image" to="/vision_tracking/rgb_image_husky2"/>
+		<remap from="/vision_tracking/rgb_image/compressed" to="/vision_tracking/rgb_image1/compressed"/>
 	</node>
+	<!--  The following files are aiming to generate the tf transform form husky*/map to husky*/base_link-->
+	<include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/> 
+	<include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/>
+	<!--Static transformation for the husky2 robot and husky1/map to /map-->
+	<include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/>
 	
 </launch>

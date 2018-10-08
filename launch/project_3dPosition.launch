@@ -1,7 +1,7 @@
 <launch>
 
 
-    <!--param name="/use_sim_time" value="true"/-->
+    <param name="/use_sim_time" value="true"/>
 
 	<node pkg="octomap_server" type="octomap_server_node" name="octomap_server">	
 		<param name="frame_id" type="string" value="map" />
@@ -13,7 +13,7 @@
 		<param name="base_frame_id" type="string" value="/base_link" />
 		<!--remap from="cloud_in" to="/velodyne_points_throttle" /-->
 		<!--remap from="cloud_in" to="/velodyne_cloud_registered_output" /-->
-		<remap from="cloud_in" to="/velodyne_points"/>
+		<remap from="cloud_in" to="/velodyne_cloud_registered_output"/>
 		<!--param name="point_cloud/max_z" value="5.0" /-->
 
 		<!--remap from="/octomap_full" to="/octomap_robot1" /-->
@@ -26,6 +26,6 @@
 	
 	</node>
 
-	<node pkg="trajectory_generator" type="PointCloud_reproject.py" name="PC_projection" output="screen"/>
-	<node pkg="trajectory_generator" type="MulTra_gene.py" name="Trajetories" output="screen"/>
+	<node pkg="trajectory_generator" type="PointCloud_reproject_husky1_rgb.py" name="PC_projection" output="screen"/>
+	<node pkg="trajectory_generator" type="Trajectory_generation_husky1_rgb.py" name="Trajetories" output="screen"/>
 </launch>

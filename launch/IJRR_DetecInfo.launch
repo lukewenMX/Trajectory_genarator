@@ -2,6 +2,7 @@
     <arg name = "husky1_rgb" default = "true"/>
     <arg name = "husky2_rgb" default = "true"/>
     <arg name = "husky1_thermal" default = "false"/>
+    <!-- <param name = "use_sim_time" value = "true"/> -->
 
     <!--The code running for the color camera in husky1-->
     <group if="$(arg husky1_rgb)" ns = "husky1/rgb">
