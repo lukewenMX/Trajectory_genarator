@@ -40,8 +40,12 @@ class Trajectory_generator(object):
 		#rospy.loginfo(human_centers.header)
         try:
             #rospy.loginfo("Here!")
-            self.tf.waitForTransform("map","left_camera",rospy.Time(0),rospy.Duration(0.1))
+            header = human_centers.header
+            #human_centers.header.frame_id = "husky2/left_camera"
+            human_centers.header.stamp = rospy.Time.now()
+            self.tf.waitForTransform("map","left_camera",rospy.Time.now(),rospy.Duration(1.0))
             self.pointcloud = self.tf.transformPointCloud("map",human_centers)
+            self.pointcloud.header.stamp = header.stamp
             #rospy.loginfo(self.pointcloud.header)
             # rospy.loginfo(human_centers.header)
             self.pointcloud_pub.publish(self.pointcloud)

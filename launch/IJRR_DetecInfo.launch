@@ -14,7 +14,7 @@
         <!--Showing the point in the octomap-->
 	    <node pkg="trajectory_generator" type="PointCloud_reproject_husky1_rgb.py" name="PC_projection" output="screen"/>
         <!--Showing the trajectories in the octomap-->
-	    <node pkg="trajectory_generator" type="Trajectory_generation_husky1_rgb.py" name="Trajetories" output="screen"/>
+	    <!-- <node pkg="trajectory_generator" type="Trajectory_generation_husky1_rgb.py" name="Trajetories" output="screen"/> -->
 
     </group>
 
@@ -43,7 +43,7 @@
         <!--Showing the point in the octomap-->
 	    <node pkg="trajectory_generator" type="PointCloud_reproject_husky2.py" name="PC_projection" output="screen"/>
         <!-- <Showing the trajectories in the octomap,projecting the trajectory to the global map through tf transformation> -->
-	    <node pkg="trajectory_generator" type="Trajectory_generation_husky2.py" name="Trajetories" output="screen"/>
+	    <!-- <node pkg="trajectory_generator" type="Trajectory_generation_husky2.py" name="Trajetories" output="screen"/> -->
 
     </group>
 

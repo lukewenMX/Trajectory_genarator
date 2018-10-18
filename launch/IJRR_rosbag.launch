@@ -3,8 +3,8 @@
 	<param name="use_sim_time" value="true"/>
 
     <!--When using the use_sim_time = true, the map_fusion node does not work properly-->
-	<arg name = "file1" value="/home/lukewen/Desktop/dataset/UAV_UGV/husky1-02.bag"/>
-	<arg name = "file2" value="/home/lukewen/Desktop/dataset/UAV_UGV/uav2.bag"/>
+	<arg name = "file1" value="/home/lukewen/Desktop/dataset/UAV_UGV/husky1-IJRR-_2018-10-13-03-47-48.bag"/>
+	<arg name = "file2" value="/home/lukewen/Desktop/dataset/UAV_UGV/uav_explore__2018-10-13-16-25-15.bag"/>
 	<node pkg="rosbag" type="play" name="playback1" args="--clock -l $(arg file1)">
 		<remap from="/camera/left/camera_info" to="/camera/left/camera_info1"/>
 		<remap from="/camera/left/image_raw/compressed" to="/camera/left/image_raw1"/>
@@ -15,7 +15,7 @@
 		<remap from="/tf" to="/tf"/>
 		<remap from="/velodyne_cloud_registered" to="/velodyne_cloud_registered1"/>
 		<remap from="/velodyne_cloud_registered_output" to="/velodyne_cloud_registered_output1"/>
-		<remap from="/velodyne_points" to="/velodyne_points1"/>
+		<remap from="/velodyne_points" to="/velodyne_points"/>
 
 		
 	</node>
@@ -34,12 +34,13 @@
 		<remap from="/velodyne_points" to="/velodyne_points2"/>
 		<remap from="/rgbdt_fusion/human_center_cloud2" to="/rgbdt_fusion/human_center_cloud2_husky2"/>
 		<remap from="/rgbdt_fusion/resColor/full" to="/rgbdt_fusion/resColor/full2"/>
-		<remap from="/vision_tracking/rgb_image/compressed" to="/vision_tracking/rgb_image1/compressed"/>
+		<remap from="/vision_tracking/rgb_image/compressed" to="/vision_tracking/rgb_image1/compressed2"/>
+		<remap from="/rgbdt_fusion/velodyne_points_no_human" to="/rgbdt_fusion/velodyne_points_no_human2"/>
 	</node>
 	<!--  The following files are aiming to generate the tf transform form husky*/map to husky*/base_link-->
-	<include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/> 
+	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/> 
 	<include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/>
-	<!--Static transformation for the husky2 robot and husky1/map to /map-->
-	<include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/>
+	<!Static transformation for the husky2 robot and husky1/map to /map-->
+	<!-- <include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/> --> 
 	
 </launch>

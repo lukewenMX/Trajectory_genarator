@@ -45,10 +45,10 @@ class Trajectory_generator(object):
             header = human_centers.header
             human_centers.header.frame_id = "husky2/left_camera"
             human_centers.header.stamp = rospy.Time.now()
-            self.tf.waitForTransform("map","husky2/left_camera",rospy.Time.now(),rospy.Duration(5))
+            self.tf.waitForTransform("map","husky2/left_camera",rospy.Time.now(),rospy.Duration(1.0))
             self.pointcloud = self.tf.transformPointCloud("map",human_centers)
             #rospy.loginfo(self.pointcloud.header)
-            self.pointcloud.header = header
+            self.pointcloud.header.stamp = header.stamp
             self.pointcloud_pub.publish(self.pointcloud)
         except(tf.LookupException,tf.ConnectivityException):
             rospy.loginfo("There are any exception happened!")#,tf.ExtrapolationException,rospy.ROSTimeMovedBackwardsException):
