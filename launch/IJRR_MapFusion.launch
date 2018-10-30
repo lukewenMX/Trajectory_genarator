@@ -4,22 +4,49 @@
     
 	<!--  The following files are aiming to generate the tf transform form husky*/map to husky*/base_link-->
 	<param name="use_sim_time" value="true"/>
-	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/>  -->
-	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/> -->
+	<include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/> 
+	<include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/>
 	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/> -->
 	<!--Static transformation for the husky2 robot and husky1/map to /map-->
-	<!-- <include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/> -->
+	<include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/>
 
 	<!--The following files are generating the paths for each robot with respect to the map frames-->
 	<!-- <include file = "$(find draw_path)/launch/husky1_draw_path.launch"/> -->
 	<!-- <include file = "$(find draw_path)/launch/husky2_draw_path.launch"/> -->
 	
 	<!--To generate the global fused map-->
-	<include file = "$(find map_fusion)/launch/octomap_mapping_twonode_vel.launch"/>
+	<!-- commented by jun -->
+	<!-- <include file = "$(find map_fusion)/launch/octomap_mapping_twonode_vel.launch"/> -->   
+	
 	<include file = "$(find map_fusion)/launch/oicp_ros_octo.launch"/>
 
-	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args="9.862 -9.660 -0.085 1.580 -0.075 -0.103 /map /husky2/map 50"/> -->
-	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky1map" args="0.0 0.0 0.0 0.0 0.0 0.0 /map /husky1/map 50"/> -->
+
+
+
+
+	<!-- husky1-1.bag husky2-1.bag -->
+	<!-- $ rosrun tf tf_echo /map /husky2 -->
+	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args="0.049, 2.044, -0.087, 0.009 ,-0.008, -0.010  /map /husky2/map 50"/> -->
+
+	<!-- 1017 Forest -->
+	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args="-0.319, 2.930, 0.026，0.013 , 0.034, -0.007 /map /husky2/map 20"/>   -->
+
+	<!-- 1024 Lab Test -->
+	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args=" 0.006, 2.186, 0.009, 0.030 , -0.004, 0.005 /map /husky2/map 50"/>  -->
+
+<!-- Below are Important !!! -->
+	<!-- 1027 Day Forest  -->
+	<node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args=" 0.008, 5.270, -0.292, 0.051, -0.011, -0.094 /map /husky2/map 50"/> 
+
+	<!-- 1027 Day Carpark  -->
+	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args=" 3.425, 3.833, -0.056, 0.057, -0.027, -0.051 /map /husky2/map 50"/>  -->
+
+	<!-- August Night Forest  -->
+	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_husky2map" args="0.171, -5.628, -0.092, 0.065, -0.012, 0.029  /map /husky2/map 50"/>  -->
+
+
+
+	<node pkg="tf" type="static_transform_publisher" name="map_to_husky1map" args="0.0 0.0 0.0 0.0 0.0 0.0 /map /husky1/map 20"/>
 	<!--Static transformation for the husky2 robot and husky1/map to /map-->
 	<!-- <include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/> -->
 	<!--include file = "$(find collab_husky_demo)/launch/visualize.launch"/-->

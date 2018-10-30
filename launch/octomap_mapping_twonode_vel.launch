@@ -1,0 +1,55 @@
+<!-- 
+-->
+<launch>
+
+<node pkg="octomap_server" type="octomap_server_node" name="octomap_server" ns="husky1">	
+			<param name="frame_id" type="string" value="map" />
+		<param name="resolution" value="0.1" />
+		<param name="sensor_model/max_range" value="15.0" />	
+		<param name="point_cloud/max_z" value="100.0" />	
+		<param name="latch" type="bool" value="false" />
+		<param name="filter_ground" type="bool" value="false" />
+		<param name="base_frame_id" type="string" value="/base_link" />
+		<remap from="cloud_in" to="/rgbdt_fusion/velodyne_points_no_human" /> 
+		<!-- <remap from="cloud_in" to="/rgbdt_fusion/velodyne_points_no_human_thermal" />  -->
+		
+		<!-- <remap from="cloud_in" to="/velodyne_points" /> -->
+
+		<!--param name="point_cloud/max_z" value="5.0" /-->
+
+		<!--remap from="/octomap_full" to="/octomap_robot1" /-->
+		<!--remap from="cloud_in" to="/assembled_clouds" /-->
+
+
+
+	</node>
+
+	<node pkg="octomap_server" type="octomap_server_node" name="octomap_server" ns="husky2">
+	<param name="resolution" value="0.1" />	
+	<param name="sensor_model/max_range" value="15.0" /> <!--5.0 for the uav-->				
+	<param name="point_cloud/max_z" value="100.0" />
+	<param name="base_frame_id" type="string" value="/base_link" />
+	<param name="frame_id" type="string" value="map" />
+		<param name="latch" type="bool" value="false" />
+		<param name="filter_ground" type="bool" value="false" />
+
+		<remap from="/octomap_point_cloud_centers" to="/octomap_point_cloud_centers" />
+		<remap from="/octomap_full" to="/octomap_full" />
+				<remap from="/octomap_binary" to="/octomap_binary" />
+
+		<!--remap from="cloud_in" to="/map2" /-->
+
+		<remap from="cloud_in" to="/rgbdt_fusion/velodyne_points_no_human2" /> 
+
+		<!-- <remap from="cloud_in" to="/camera/vga/points2_throttle"/> -->
+		<remap from="/tf" to="/tf2" />
+		<remap from="/tf_static" to="/tf_static2" />
+		<remap from="/rosout" to="/rosout2" />
+		<remap from="/clock" to="/clock2" />
+
+	</node>
+
+
+</launch>
+
+

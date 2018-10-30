@@ -3,9 +3,29 @@
 	<param name="use_sim_time" value="true"/>
 
     <!--When using the use_sim_time = true, the map_fusion node does not work properly-->
-	<arg name = "file1" value="/home/lukewen/Desktop/dataset/UAV_UGV/husky1-IJRR-_2018-10-13-03-47-48.bag"/>
-	<arg name = "file2" value="/home/lukewen/Desktop/dataset/UAV_UGV/uav_explore__2018-10-13-16-25-15.bag"/>
-	<node pkg="rosbag" type="play" name="playback1" args="--clock -l $(arg file1)">
+	<!-- <arg name = "file1" value="/home/ycl/dataset/husky1-1.bag"/> -->
+	<!-- <arg name = "file2" value="/home/ycl/dataset/husky2-1.bag"/> -->
+
+	<!-- <arg name = "file1" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky1-direction-rgbdt-_2018-10-23-21-49-40.bag"/> -->
+	<!-- <arg name = "file2" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky2-direction-rgbdt-_2018-10-23-21-57-17.bag"/> -->
+
+	<!-- <arg name = "file1" value="/home/ycl/dataset/IJRR/rgbdt/husky1-direction-rgbdt-_2018-10-24-16-53-03.bag"/> -->
+	<!-- <arg name = "file2" value="/home/ycl/dataset/IJRR/rgbdt/husky2-direction-rgbdt-_2018-10-24-16-54-49.bag"/> -->
+
+	<!-- day forest -->
+	<arg name = "file1" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky1-IJRR-rgbdt-day-forest-_2018-10-27-22-36-12.bag"/>
+	<arg name = "file2" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky2-IJRR-rgbdt-day-forest-_2018-10-27-22-59-19.bag"/>
+
+	<!-- day carpark -->
+	<!-- <arg name = "file1" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky1-IJRR-rgbdt-day-carpark-_2018-10-28-13-03-49.bag"/> -->
+	<!-- <arg name = "file2" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky2-IJRR-rgbdt-day-carpark-_2018-10-28-13-26-56.bag"/> -->
+
+	<!-- night forest -->
+	<!-- <arg name = "file1" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky1-IJRR-rgbdt-night-forest-_2018-10-28-22-59-12.bag"/> -->
+	<!-- <arg name = "file2" value="/home/ycl/dataset/IJRR/rgbdt_1017/husky2-IJRR-rgbdt-night-forest-_2018-10-29-16-52-23.bag"/> -->
+
+	<!-- -l -->
+	<node pkg="rosbag" type="play" name="playback1" args="--clock  $(arg file1)">
 		<remap from="/camera/left/camera_info" to="/camera/left/camera_info1"/>
 		<remap from="/camera/left/image_raw/compressed" to="/camera/left/image_raw1"/>
 		<remap from="/camera/right/camera_info" to="/camera/right/camera_info1"/>
@@ -17,11 +37,12 @@
 		<remap from="/velodyne_cloud_registered_output" to="/velodyne_cloud_registered_output1"/>
 		<remap from="/velodyne_points" to="/velodyne_points"/>
 
+
 		
 	</node>
 	
-
-	<node pkg="rosbag" type="play" name="playback2" args="--clock -l $(arg file2)" >
+	<!-- day forest -s 2.7, day carpark -s 1.4 -->
+	<node pkg="rosbag" type="play" name="playback2" args="--clock -s 2.7 $(arg file2)" >
 		<remap from="/camera/left/camera_info" to="/camera/left/camera_info2"/>
 		<remap from="/camera/left/image_raw/compressed" to="/camera/left/image_raw2"/>
 		<remap from="/camera/right/camera_info" to="/camera/right/camera_info2"/>
@@ -34,13 +55,15 @@
 		<remap from="/velodyne_points" to="/velodyne_points2"/>
 		<remap from="/rgbdt_fusion/human_center_cloud2" to="/rgbdt_fusion/human_center_cloud2_husky2"/>
 		<remap from="/rgbdt_fusion/resColor/full" to="/rgbdt_fusion/resColor/full2"/>
-		<remap from="/vision_tracking/rgb_image/compressed" to="/vision_tracking/rgb_image1/compressed2"/>
+		<remap from="/vision_tracking/rgb_image/compressed" to="/vision_tracking/rgb_image1/compressed"/>
 		<remap from="/rgbdt_fusion/velodyne_points_no_human" to="/rgbdt_fusion/velodyne_points_no_human2"/>
+		<remap from="/rgbdt_fusion/reconstructed_cloud/color_cloud_in_cam_accurate" to="/rgbdt_fusion/reconstructed_cloud/color_cloud_in_cam_accurate2"/>
 	</node>
 	<!--  The following files are aiming to generate the tf transform form husky*/map to husky*/base_link-->
-	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/> 
-	<include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/>
-	<!Static transformation for the husky2 robot and husky1/map to /map-->
-	<!-- <include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/> --> 
+	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky1_pose_to_tftree.launch"/>  -->
+	<!-- <include file = "$(find repub_robot_tf)/launch/broadcast_husky2_pose_to_tftree.launch"/> -->
+	<!--Static transformation for the husky2 robot and husky1/map to /map-->
+	<!-- <include file = "$(find repub_robot_tf)/launch/repub_husky2_frames.launch"/>  -->
+	<!-- <node > -->
 	
 </launch>

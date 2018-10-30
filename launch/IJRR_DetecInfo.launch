@@ -1,4 +1,5 @@
 <launch>
+    <param name="use_sim_time" value="true"/>
     <arg name = "husky1_rgb" default = "true"/>
     <arg name = "husky2_rgb" default = "true"/>
     <arg name = "husky1_thermal" default = "false"/>
@@ -29,7 +30,7 @@
         <!--Showing the point in the octomap-->
 	    <node pkg="trajectory_generator" type="PointCloud_reproject_husky1_thermal.py" name="PC_projection" output="screen"/>
         <!--Showing ing the trajectories in the octomap-->
-	    <node pkg="trajectory_generator" type="Trajectory_generation_husky1_thermal.py" name="Trajetories" output="screen"/>
+	    <!-- <node pkg="trajectory_generator" type="Trajectory_generation_husky1_thermal.py" name="Trajetories" output="screen"/> -->
 
     </group>
 
@@ -46,5 +47,8 @@
 	    <!-- <node pkg="trajectory_generator" type="Trajectory_generation_husky2.py" name="Trajetories" output="screen"/> -->
 
     </group>
+
+    <node pkg="trajectory_generator" type="Fused_PointCloud.py" name="Fused_PointCloud" />
+    <node pkg="trajectory_generator" type="Unique_person_detection.py" name="Unique_person_detection" />
 
 </launch>
